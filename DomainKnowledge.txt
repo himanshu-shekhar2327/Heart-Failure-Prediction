@@ -1,0 +1,50 @@
+1. Resting BP
+Resting Blood Pressure refers to the arterial pressure when a person is at rest.
+RestingBP = 0 → Impossible (a living person can’t have 0 mmHg blood pressure).
+→  Treat as invalid or irrelevant and should be removed or replaced.
+
+RestingBP < 40 → Almost impossible unless device error or data entry mistake.
+→ Usually treated as outlier or invalid.
+
+RestingBP > 250 → Clinically extremely rare, likely measurement or data error.
+
+SO I DEFINE THE RESTING BP AS RESTING BP < 40 AND RESTING BP > 250 ARE CONSIDERED AS OUTLIER
+
+2. Cholesterol
+Cholesterol column typically refers to serum cholesterol in mg/dL (milligrams per deciliter).
+Cholesterol = 0 → ❌ Impossible (no living person can have 0 mg/dL cholesterol).
+→ Invalid or irrelevant
+
+Cholesterol < 100 → ⚠️ Unrealistically low in most adults; likely incorrect or device error.
+→ Usually considered outlier
+
+Cholesterol > 400–500 → ⚠️ Extremely rare; could happen in severe familial hypercholesterolemia, but generally not in population data.
+→ Often treated as outlier
+
+If Cholesterol < 100 or Cholesterol > 400 → treated as outlier
+
+3. Max HR
+MaxHR (Maximum Heart Rate) = The highest heart rate (in beats per minute) achieved by the person during exercise or testing.
+It reflects cardiovascular fitness and heart function.
+
+“The MaxHR column contains values between 60 and 202, which fall within the normal physiological range (60–220 bpm). Hence, no outlier treatment is required for this feature.”
+
+
+4. Old Peak
+Domain Understanding
+
+ST depression values are numeric and non-negative.
+
+Typical values range between 0.0 and around 6.0 mm.
+
+In clinical practice:
+
+Oldpeak = 0.0 → No depression (normal)
+
+1.0–2.0 mm → Mild depression
+
+>2.0 mm → Significant abnormality
+
+>6.0 mm → Extremely rare, often a measurement or data error
+
+If Oldpeak < 0 or Oldpeak > 6 → Outlier/Invalid
