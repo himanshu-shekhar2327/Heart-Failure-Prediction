@@ -89,3 +89,55 @@ If Oldpeak < 0 or Oldpeak > 6 → Outlier/Invalid
 # ExerciseAngina  -discomfort caused by reduced blood flow to the heart muscle
     # Yes - String predictor of heart
 # FastingBS - A value > 120 mg/dl is a indicator of high diabetes or pre-diabeted, which significantly increases heart disease risk
+
+**Medical / Domain Rationale for Defining Outliers**
+
+From the above boxplot we can clearly see the outlier in the Cholesterol and resting BP features variables . There are only one outlier in resting BP but many are in Cholesterol.
+Applying the domain Knowldege before treating outlier :- 
+1. Cholesterol
+Cholesterol column typically refers to serum cholesterol in mg/dL (milligrams per deciliter).
+Cholesterol = 0 →  Impossible (no living person can have 0 mg/dL cholesterol).
+→ Invalid or irrelevant
+
+Cholesterol < 100 →  Unrealistically low in most adults; likely incorrect or device error.
+We can considered it has as a outlier
+
+Cholesterol > 400–500 →  Extremely rare; could happen in severe familial hypercholesterolemia, but generally not in population data.
+we will treat as a outlier
+
+- Age is fine minimum is 28 and maximum is 77
+- RestingBP < 40 Resting BP > 250 are considered as a outlier.
+- Cholesterol < 100 or Cholesterol > 400 → we treat as outlier
+- Fasting BS are binary 0 and 1
+- Max HR are fine betwen 60 - 202
+- Oldpeak < 0 or Oldpeak > 6 → Outlier/Invalid# Counting the outlier as per the Domain Knowledge 
+
+print("\n==============================================================================")
+print("\n COUNTING THE OUTLIER AS PER THE DOMAIN KNOWLEDGE\n")
+print("\n================================================================================\n")
+# Resting BP outlier
+outlier_restingBP = X[(X['RestingBP'] < 40) | (X['RestingBP'] > 250)]
+# Cholestrol outliers
+outlier_chol = X[(X['Cholesterol'] < 100 ) | (X['Cholesterol'] > 400) ]
+# Oldpeak outlier
+outlier_oldpeak = X[(X['Oldpeak'] < 0 ) | (X['Oldpeak'] > 6 )]
+
+# Count total outlier
+print("RestingBP outliers:",len(outlier_restingBP))
+print("Cholesterol outliers:",len(outlier_chol))
+print("Oldpeak outliers:",len(outlier_oldpeak))
+print('\n')- As per the Domain Knowledge we found the outlier in the column RestingBP , Cholesterol , Oldpeak.
+- The large number of outliers in Cholesterol suggests measurement errors or data entry issues rather than genuine extremes.**Outlier** 
+
+Rather than deleting the outlier rows which cause loss of valuable data in a small dataset , we treated them as missing or invalid values and replaced them based on the skewness of data distribution.# Treating the Domain Knowledge  Outlier
+# X['Oldpeak'] = np.where((X['Oldpeak'] < 0) | (X['Oldpeak'] > 6) ,
+#                        X['Oldpeak'].median(),
+#                        X['Oldpeak'])
+# X['RestingBP'] = np.where((X['RestingBP'] < 40) | (X['RestingBP'] > 250),
+#                          X['RestingBP'].median(),
+#                          X['RestingBP'])
+# X['Cholesterol'] = np.where(X['Cholesterol'] < 100 ,
+#                            X['Cholesterol'].median(),
+#                            np.where(X['Cholesterol'] > 400 , 400 , X['Cholesterol']))
+# # X.describe()
+# print('\n')We choose median imputation because it provides a robust central tendency for right skewed medical features , prevent bias from extreme cases , and maintains realistic physiological representation of the data.
